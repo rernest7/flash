@@ -15,9 +15,22 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $user =         User::factory()->create([
+                    'name' => 'Test User',
+                    'email' => 'test@example.com',
+                ]);
+        for ($i = 1;$i <= 30;$i++) {
+            $deck = $user->decks()->create([
+                'name' => fake()->words(rand(2, 8), true),
+            ]);
+
+            for ($i = 1; $i <= 30; $i++) {
+                $deck->cards()->create([
+                    'question' => fake()->words(rand(3, 10), true),
+                    'answer' => fake()->words(rand(3, 10), true)
+                ]);
+            }
+        }
+
     }
 }
